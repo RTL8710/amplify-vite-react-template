@@ -1,0 +1,56 @@
+type Event @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  type: String
+  event_time: AWSDateTime
+  event_data: AWSJSON
+  device_id: String
+  event_snap_image: String
+}
+
+type DeviceUUID @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  type: String
+  customer: String
+  status: String
+  validity: AWSDateTime
+}
+
+type Device @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Users: [User] @manyToMany(relationName: "DeviceUser")
+  deviceType: String
+  productType: String
+  deviceName: String
+  deviceModelName: String
+  deviceDateTime: AWSDateTime
+  deviceVersion: String
+  deviceConnectStatus: Boolean
+  devicePicture: String
+  deviceGeneralInformation: AWSJSON
+  alarmNotification: AWSJSON
+  alarmInformation: AWSJSON
+  storageInformation: AWSJSON
+  cardInformation: AWSJSON
+  motionDetectionInformation: AWSJSON
+  recordInformation: AWSJSON
+  electricInformation: AWSJSON
+  videoInformation: AWSJSON
+  audioInformation: AWSJSON
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  awsUserID: String
+  awsUserName: String
+  phoneNumber: String
+  email: String
+  picture: String
+  devices: [Device] @manyToMany(relationName: "DeviceUser")
+  region: String
+}
+
+type Todo @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  description: String
+} 
